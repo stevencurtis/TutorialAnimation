@@ -245,10 +245,7 @@ extension ViewController: UIScrollViewDelegate {
         backgroundFillLayer.fillColor = backgroundColours[pendingIndex].cgColor
         
         self.backgroundImageViewBack.image = backgroundImages[pendingIndex]
-        
-        let animatedFrame = backgroundImageViewFront.layer.presentation()!.frame
-        let xDistance = animatedFrame.midX - backgroundImageViewBack!.center.x
-        
+
         // iconFront.text = iconSet[currentIndex]
         // iconBack.text = iconSet[pendingIndex]
         if (percentComplete <= 0.99) {
@@ -261,7 +258,6 @@ extension ViewController: UIScrollViewDelegate {
             circleMaskViewBackground!.fillColor = circleMaskViewBackground!.fillColor.withAlphaComponent(percentComplete)
             circleMaskViewForeground!.fillColor = circleMaskViewForeground!.fillColor.withAlphaComponent(1 - percentComplete)
             
-            print ("xDistance", xDistance)
             
             
 
