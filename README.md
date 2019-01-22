@@ -12,6 +12,6 @@ When the scroll view is moved, the alpha is changed for the mask. However, chang
 Because there are three 
 
 <p align="center">
-  <img src="https://github.com/stevencurtis/cleantableviews/blob/master/standardtable.png" width="" height="">
+  <img src="https://github.com/stevencurtis/TutorialAnimation/blob/master/Circles.png" width="" height="">
 </p>
 
