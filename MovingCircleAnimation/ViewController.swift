@@ -12,23 +12,24 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var pageIndicator: UIPageControl!
-    
     @IBOutlet weak var backgroundImageViewFront: UIImageView!
     @IBOutlet weak var backgroundImageViewBack: UIImageView!
-    fileprivate var circleMaskViewBackstop :CircleMaskView?
-    fileprivate var circleMaskViewBackground :CircleMaskView?
-    
-    fileprivate var circleMaskViewForeground:CircleMaskView?
 
 
     @IBOutlet var masterView: UIView!
-    
     @IBOutlet weak var foregroundColourView: UIView!
-    
     @IBOutlet weak var imageClipperBG: UIView!
     @IBOutlet weak var imageClipperFG: UIView!
     @IBOutlet weak var imageClipperBS: UIView!
     @IBOutlet weak var button: UIButton!
+    
+    fileprivate var circleMaskViewBackstop :CircleMaskView?
+    fileprivate var circleMaskViewBackground :CircleMaskView?
+    fileprivate var circleMaskViewForeground:CircleMaskView?
+    
+    fileprivate var foregroundFillLayer = CAShapeLayer()
+    fileprivate var backgroundFillLayer = CAShapeLayer()
+    fileprivate var backstopFillLayer = CAShapeLayer()
     
     @IBAction func buttonAction(_ sender: UIButton) {
         print ("test")
@@ -83,11 +84,24 @@ class ViewController: UIViewController {
             }
         }
     }
-    var foregroundFillLayer = CAShapeLayer()
-    var backgroundFillLayer = CAShapeLayer()
-    var backstopFillLayer = CAShapeLayer()
-
     
+    @IBAction func pageControlValueChange(_ sender: UIPageControl) {
+        let contentController = getContentViewController(withIndex: sender.currentPage)
+        let contentControllers = [contentController]
+        pendingIndex = sender.currentPage
+        var forward = true
+        if sender.currentPage < currentIndex
+        {
+            forward = false
+        }
+        // calls the scrollview delegate if animated
+        pageViewController.setViewControllers(
+            (contentControllers as! [UIViewController]) , direction: forward ? UIPageViewController.NavigationDirection.forward : UIPageViewController.NavigationDirection.reverse, animated: true, completion: {_ in self.currentIndex = sender.currentPage })
+    }
+    
+    
+
+
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         if(circleMaskViewBackground == nil){
@@ -95,6 +109,7 @@ class ViewController: UIViewController {
             backstopFillLayer.path = UIBezierPath(rect: foregroundColourView.bounds).cgPath
             backstopFillLayer.fillColor = backgroundColours[0].cgColor
             backstopFillLayer.opacity = 1
+
             foregroundColourView.layer.addSublayer(backstopFillLayer)
 
             backgroundFillLayer.path = UIBezierPath(rect: foregroundColourView.bounds).cgPath
@@ -116,6 +131,11 @@ class ViewController: UIViewController {
             
             circleMaskViewForeground = CircleMaskView(drawIn: imageClipperBS)
             maskViewInCircleMask(circleMask: &circleMaskViewForeground!, drawIn: imageClipperBS, index: currentIndex, alpha: 1.0)
+        } else {
+            // orientation can be changed, and CAShapeLayer is not auto-changed on rotation
+            foregroundFillLayer.path = UIBezierPath(rect: foregroundColourView.bounds).cgPath
+            backgroundFillLayer.path = UIBezierPath(rect: foregroundColourView.bounds).cgPath
+            backstopFillLayer.path = UIBezierPath(rect: foregroundColourView.bounds).cgPath
         }
     }
     
@@ -130,13 +150,13 @@ class ViewController: UIViewController {
     
     
     override func viewDidAppear(_ animated: Bool) {
-//        self.containerView.autoTranslateAnimationWithDistance(8.0, duration: 3)
-       //  self.backgroundImageViewFront.autoTranslateAnimationWithDistance(8.0, duration: 3)
+
+            self.backgroundImageViewFront.autoTranslateAnimationWithDistance(3.0, duration: 8)
+
+//        self.backgroundImageViewFront.layer.removeAllAnimations() 
     }
     
-    
     func createPageViewController() {
-        
         // Instantiate the PageViewController
         let pageController = self.storyboard?.instantiateViewController(withIdentifier: "pageVC")
         self.pageViewController = (pageController as! UIPageViewController)
@@ -165,7 +185,6 @@ class ViewController: UIViewController {
         if index < backgroundImages.count {
             if let contentVC = self.storyboard?.instantiateViewController(withIdentifier: "instructionsVC") as? InstructionsVC
             {
-                contentVC.image = backgroundImages[index]
                 contentVC.index = index
                 return contentVC
             }
@@ -199,15 +218,12 @@ extension ViewController: UIPageViewControllerDataSource, UIPageViewControllerDe
     func pageViewController(_ pageViewController: UIPageViewController, willTransitionTo pendingViewControllers: [UIViewController]) {
         let nextVC = pendingViewControllers.first! as! InstructionsVC
         pendingIndex = nextVC.index
-//        currentIndex = nextVC.index
-        
     }
     
     //update pageIndicator
     func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
         if completed {
             currentIndex = pendingIndex
-            
             self.pageIndicator.currentPage = currentIndex
         }
     }
@@ -215,6 +231,7 @@ extension ViewController: UIPageViewControllerDataSource, UIPageViewControllerDe
 }
 
 extension ViewController: UIScrollViewDelegate {
+    
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let point = scrollView.contentOffset
         var percentComplete: CGFloat
@@ -222,12 +239,15 @@ extension ViewController: UIScrollViewDelegate {
 
         guard !( pendingIndex == 0 && currentIndex == 0) else {return}
      
-        // animation -  transition using alpha
+        // animation -  transition using alpha values
         
         circleMaskViewBackground!.fillColor = backgroundColours[pendingIndex]
         backgroundFillLayer.fillColor = backgroundColours[pendingIndex].cgColor
         
-self.backgroundImageViewBack.image = backgroundImages[pendingIndex]
+        self.backgroundImageViewBack.image = backgroundImages[pendingIndex]
+        
+        let animatedFrame = backgroundImageViewFront.layer.presentation()!.frame
+        let xDistance = animatedFrame.midX - backgroundImageViewBack!.center.x
         
         // iconFront.text = iconSet[currentIndex]
         // iconBack.text = iconSet[pendingIndex]
@@ -240,16 +260,37 @@ self.backgroundImageViewBack.image = backgroundImages[pendingIndex]
             
             circleMaskViewBackground!.fillColor = circleMaskViewBackground!.fillColor.withAlphaComponent(percentComplete)
             circleMaskViewForeground!.fillColor = circleMaskViewForeground!.fillColor.withAlphaComponent(1 - percentComplete)
+            
+            print ("xDistance", xDistance)
+            
+            
 
         } else {
-            self.backgroundImageViewFront.image = backgroundImages[pendingIndex]
-            self.backgroundImageViewBack.image = backgroundImages[currentIndex]
+//            print (self.backgroundImageViewFront.center.x - backgroundImageViewBack!.center.x )
+//            self.backgroundImageViewFront.center.x = backgroundImageViewBack!.center.x
+//            self.backgroundImageViewFront.center.y = backgroundImageViewBack!.center.y
+            
+            
+            // track image that has been moved with transofrmation
+//            let animatedFrame = backgroundImageViewFront.layer.presentation()!.frame
+//            print(animatedFrame.midX - backgroundImageViewBack.frame.midX)
+//            var newFrame = animatedFrame
+//            newFrame.origin.x = backgroundImageViewBack.frame.minX // - animatedFrame.minX
+//            newFrame.origin.y = backgroundImageViewBack.frame.minY
+//            self.backgroundImageViewFront.frame = newFrame
+            
+
+            self.backgroundImageViewBack.alpha = 1 - percentComplete
+            self.backgroundImageViewFront.alpha = percentComplete
+
+            self.backgroundImageViewFront.image = self.backgroundImages[self.pendingIndex]
+            self.backgroundImageViewBack.image = self.backgroundImages[self.currentIndex]
+            
             
             circleMaskViewForeground!.fillColor = circleMaskViewBackground!.fillColor
             foregroundFillLayer.fillColor = backgroundFillLayer.fillColor
             
-            self.backgroundImageViewFront.alpha = percentComplete
-            self.backgroundImageViewBack.alpha = 1 - percentComplete
+
  
 //            self.containerView.backgroundColor = backgroundColours[currentIndex]
 //            self.masterView.backgroundColor = backgroundColours[currentIndex]
