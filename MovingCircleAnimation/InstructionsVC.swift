@@ -9,22 +9,28 @@
 import UIKit
 
 class InstructionsVC: UIViewController {
-
+    @IBOutlet weak var instructionsLabel: UILabel!
+    
+    var image : UIImage?
+    var index : Int = 0
+    
+    @IBOutlet var bgView: UIView!
+    @IBOutlet weak var imageView: UIImageView!
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        if let image = image {
+            
+            // instructionsLabel.text = index.description
+            // imageView.image = image
+            
+//            switch (index) {
+//            case 0 :  bgView.backgroundColor = UIColor.red
+//            case 1: bgView.backgroundColor = UIColor.blue
+//            case 2: bgView.backgroundColor = UIColor.orange
+//            default :  bgView.backgroundColor = UIColor.clear
+//            }
+            
+        }
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

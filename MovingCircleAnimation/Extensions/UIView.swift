@@ -12,7 +12,7 @@ import UIKit
 @IBDesignable
 
 extension UIView {
-    func autoTranslateAnimation(_ distance: Float) {
+    func autoTranslateAnimationWithDistance(_ distance: Float, duration: Float? = 5.0) {
         
         //make sure the uiview is still visible otherwise stop animation
         //important to prevent CPU leak.
@@ -34,7 +34,7 @@ extension UIView {
         }, completion: {
             (value: Bool) in
             //when we are done, do it again, with a different translation
-            self.autoTranslateAnimation(distance)
+            self.autoTranslateAnimationWithDistance(distance)
         })
 }
 }

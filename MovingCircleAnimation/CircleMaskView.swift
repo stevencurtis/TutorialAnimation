@@ -55,6 +55,7 @@ class CircleMaskView {
         }
         
         let path = UIBezierPath(roundedRect: CGRect(x: 0, y: 0, width: size.width, height: size.height), cornerRadius: 0.0)
+//         let circlePath = UIBezierPath(roundedRect: CGRect(x: 5, y: 5, width: size.width - 10, height: size.width - 10), cornerRadius: rad)
         let circlePath = UIBezierPath(roundedRect: CGRect(x: size.width / 2.0 - rad / 2.0, y: size.height / 2.0 - rad / 2.0, width: rad, height: rad), cornerRadius: rad)
         
         path.append(circlePath)

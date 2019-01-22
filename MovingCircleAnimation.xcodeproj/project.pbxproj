@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CA1AFC5321F596C3008E048B /* RandomNumbers.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA1AFC5021F596C3008E048B /* RandomNumbers.swift */; };
+		CA1AFC5421F596C3008E048B /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA1AFC5121F596C3008E048B /* UIView.swift */; };
+		CA1AFC5521F596C3008E048B /* Float.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA1AFC5221F596C3008E048B /* Float.swift */; };
+		CA1AFC5721F596DC008E048B /* CircleMaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA1AFC5621F596DC008E048B /* CircleMaskView.swift */; };
+		CA3F80D121F568BC00A39DD6 /* InstructionsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA3F80D021F568BC00A39DD6 /* InstructionsVC.swift */; };
 		CAF8F80421EF3031007FE40B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAF8F80321EF3031007FE40B /* AppDelegate.swift */; };
 		CAF8F80621EF3031007FE40B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAF8F80521EF3031007FE40B /* ViewController.swift */; };
 		CAF8F80921EF3031007FE40B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CAF8F80721EF3031007FE40B /* Main.storyboard */; };
@@ -26,6 +31,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		CA1AFC5021F596C3008E048B /* RandomNumbers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RandomNumbers.swift; sourceTree = "<group>"; };
+		CA1AFC5121F596C3008E048B /* UIView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
+		CA1AFC5221F596C3008E048B /* Float.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Float.swift; sourceTree = "<group>"; };
+		CA1AFC5621F596DC008E048B /* CircleMaskView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircleMaskView.swift; sourceTree = "<group>"; };
+		CA3F80D021F568BC00A39DD6 /* InstructionsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstructionsVC.swift; sourceTree = "<group>"; };
 		CAF8F80021EF3031007FE40B /* MovingCircleAnimation.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MovingCircleAnimation.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CAF8F80321EF3031007FE40B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CAF8F80521EF3031007FE40B /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -56,6 +66,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		CA1AFC4F21F596B3008E048B /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				CA1AFC5221F596C3008E048B /* Float.swift */,
+				CA1AFC5021F596C3008E048B /* RandomNumbers.swift */,
+				CA1AFC5121F596C3008E048B /* UIView.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		CAF8F7F721EF3031007FE40B = {
 			isa = PBXGroup;
 			children = (
@@ -79,6 +99,9 @@
 			children = (
 				CAF8F80321EF3031007FE40B /* AppDelegate.swift */,
 				CAF8F80521EF3031007FE40B /* ViewController.swift */,
+				CA3F80D021F568BC00A39DD6 /* InstructionsVC.swift */,
+				CA1AFC5621F596DC008E048B /* CircleMaskView.swift */,
+				CA1AFC4F21F596B3008E048B /* Extensions */,
 				CAF8F80721EF3031007FE40B /* Main.storyboard */,
 				CAF8F80A21EF3032007FE40B /* Assets.xcassets */,
 				CAF8F80C21EF3032007FE40B /* LaunchScreen.storyboard */,
@@ -197,8 +220,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CA1AFC5421F596C3008E048B /* UIView.swift in Sources */,
 				CAF8F80621EF3031007FE40B /* ViewController.swift in Sources */,
+				CA1AFC5521F596C3008E048B /* Float.swift in Sources */,
 				CAF8F80421EF3031007FE40B /* AppDelegate.swift in Sources */,
+				CA3F80D121F568BC00A39DD6 /* InstructionsVC.swift in Sources */,
+				CA1AFC5721F596DC008E048B /* CircleMaskView.swift in Sources */,
+				CA1AFC5321F596C3008E048B /* RandomNumbers.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -291,7 +319,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -346,7 +374,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
