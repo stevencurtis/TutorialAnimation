@@ -15,7 +15,7 @@ extension UIView {
     
     func autoTranslateAnimationWithDistance(_ distance: Float, duration: Float? = 5.0) {
         
-        //make sure the uiview is still visible otherwise stop animations, prevents any CPU leaks.
+        //make sure the uiview is still visible otherwise stop animations, prevents CPU leaks.
         if(self.window == nil){
             return;
         }
